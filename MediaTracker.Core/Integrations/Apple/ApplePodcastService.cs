@@ -118,7 +118,7 @@ namespace MediaTracker.Core.Integrations.Apple
                         e.TrackId.ToString(),
                         e.TrackName,
                         e.Description,
-                        DateTime.TryParse(e.ReleaseDate, out var dt) ? dt.ToString("yyyy-MM-dd") : e.ReleaseDate,
+                        DateTime.TryParse(e.ReleaseDate, out var dt) ? dt.ToString("yyyy-MM-dd HH:mm") : e.ReleaseDate,
                         TimeSpan.FromMilliseconds(e.TrackTimeMillis),
                         e.TrackViewUrl ?? $"https://podcasts.apple.com/podcast/id{podcastId}",
                         e.ArtworkUrl600 ?? e.ArtworkUrl160

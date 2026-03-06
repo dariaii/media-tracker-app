@@ -12,7 +12,8 @@ namespace MediaTracker.Infrastructure.Hangfire
                 cronExpression: "0 8 * * *",
                 options: new RecurringJobOptions
                 {
-                    TimeZone = TimeZoneInfo.Local
+                    TimeZone = TimeZoneInfo.Local,
+                    MisfireHandling = MisfireHandlingMode.Ignorable
                 });
         }
     }

@@ -6,18 +6,21 @@ using MediaTracker.Core.Services;
 using MediaTracker.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 
 namespace MediaTracker.Controllers
 {
     [Authorize]
     public class SubscriptionsController(
         ILogger<SubscriptionsController> logger,
+        IStringLocalizer localizer,
         ISubscriptionService subscriptionService,
         ISpotifyService spotifyService,
         IYouTubeService youTubeService,
         IApplePodcastService applePodcastService) : BaseController
     {
         private readonly ILogger<SubscriptionsController> _logger = logger;
+        private readonly IStringLocalizer _localizer = localizer;
         private readonly ISubscriptionService _subscriptionService = subscriptionService;
         private readonly ISpotifyService _spotifyService = spotifyService;
         private readonly IYouTubeService _youTubeService = youTubeService;
@@ -56,7 +59,8 @@ namespace MediaTracker.Controllers
                 try
                 {
                     await _subscriptionService.CreateSubscriptionAsync(model.Type, model.PlatformItemId.Trim(), model.ReceiveNotifications);
-                    
+                    TempData["SuccessMessage"] = _localizer["Subscription_CreatedMessage"].Value;
+
                     if (!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
                     {
                         return Redirect(model.ReturnUrl);
@@ -84,11 +88,17 @@ namespace MediaTracker.Controllers
                 if (!result)
                 {
                     _logger.LogWarning("Attempted to delete non-existent or unauthorized subscription {Id}.", id);
+                    TempData["Errors"] = _localizer["Global_ErrorMesage"].Value;
+                }
+                else
+                {
+                     TempData["SuccessMessage"] = _localizer["Subscription_DeletedMessage"].Value;
                 }
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error deleting subscription {Id}.", id);
+                TempData["Errors"] = _localizer["Global_ErrorMesage"].Value;
             }
 
             return RedirectToAction(nameof(Index));
@@ -123,7 +133,7 @@ namespace MediaTracker.Controllers
                 var items = await _subscriptionService.GetWhatsNewAsync(filter);
                 return View(new WhatsNewViewModel
                 {
-                    Items = items,
+                    Items = [.. items.Take(30)],
                     ActiveFilter = filter,
                 });
             }

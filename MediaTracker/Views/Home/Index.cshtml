@@ -39,7 +39,10 @@ else
                             @if (item.ImageUrl is not null)
                             {
                                 <div class="position-relative">
-                                    <img src="@item.ImageUrl" class="card-img-top" alt="@item.Title"
+                                    <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" 
+                                         data-src="@item.ImageUrl" 
+                                         class="card-img-top lazy-image" 
+                                         alt="@item.Title"
                                          style="@imageAspectRatio object-fit: cover; width: 100%;" />
                                     @if (!string.IsNullOrEmpty(item.Badge))
                                     {
@@ -122,7 +125,10 @@ else
                             <div class="card text-center">
                                 @if (sub.ImageUrl is not null)
                                 {
-                                    <img src="@sub.ImageUrl" class="card-img-top" alt="@sub.Name"
+                                    <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" 
+                                         data-src="@sub.ImageUrl" 
+                                         class="card-img-top lazy-image" 
+                                         alt="@sub.Name"
                                          style="aspect-ratio: 1 / 1; object-fit: cover; width: 100%;" />
                                 }
                                 <div class="card-body py-2 px-2">

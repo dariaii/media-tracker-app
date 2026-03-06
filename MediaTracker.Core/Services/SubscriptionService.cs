@@ -234,7 +234,6 @@ namespace MediaTracker.Core.Services
 
             return feedItems
                 .OrderByDescending(f => f.ReleaseDateParsed)
-                .Take(30)
                 .ToList();
         }
 

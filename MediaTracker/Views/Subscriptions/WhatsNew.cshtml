@@ -50,7 +50,10 @@ else
                     @if (item.ImageUrl is not null)
                     {
                         <div class="position-relative">
-                            <img src="@item.ImageUrl" class="card-img-top" alt="@item.Title"
+                            <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" 
+                                 data-src="@item.ImageUrl" 
+                                 class="card-img-top lazy-image" 
+                                 alt="@item.Title"
                                  style="height: 140px; object-fit: cover;" />
                             @if (!string.IsNullOrEmpty(item.Badge))
                             {
@@ -79,7 +82,7 @@ else
                             <i class="bx bx-calendar me-1"></i>
                             @if (DateTime.TryParse(item.ReleaseDate, out var dt))
                             {
-                                @dt.ToString("dd MMM yyyy HH:mm")
+                                @dt.ToString(dt.TimeOfDay != TimeSpan.Zero ? "dd MMM yyyy HH:mm" : "dd MMM yyyy")
                             }
                             else
                             {

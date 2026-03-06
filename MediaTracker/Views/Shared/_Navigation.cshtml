@@ -27,11 +27,11 @@
                         <div class="avatar">
                             @if (Model.ProfilePicturePath != null)
                             {
-                                <img src="~/profile-pictures/@Model.ProfilePicturePath" class="w-px-40 h-auto rounded-circle">
+                                <img src="~/profile-pictures/@Model.ProfilePicturePath" class="w-px-40 h-px-40 rounded-circle" style="object-fit:cover">
                             }
                             else
                             {
-                                <img src="~/assets/img/default-profile.jpg" class="w-px-40 h-auto rounded-circle" />
+                                <img src="~/assets/img/default-profile.jpg" class="w-px-40 h-px-40 rounded-circle" style="object-fit:cover" />
                             }
                         </div>
                     </a>
@@ -43,11 +43,11 @@
                                         <div class="avatar">
                                             @if (Model.ProfilePicturePath != null)
                                             {
-                                                <img src="~/profile-pictures/@Model.ProfilePicturePath" class="w-px-40 h-auto rounded-circle">
+                                                <img src="~/profile-pictures/@Model.ProfilePicturePath" class="w-px-40 h-px-40 rounded-circle" style="object-fit:cover">
                                             }
                                             else
                                             {
-                                                <img src="~/assets/img/default-profile.jpg" class="w-px-40 h-auto rounded-circle" />
+                                                <img src="~/assets/img/default-profile.jpg" class="w-px-40 h-px-40 rounded-circle" style="object-fit:cover" />
                                             }
                                         </div>
                                     </div>

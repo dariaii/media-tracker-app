@@ -40,9 +40,13 @@ else
                         <tr>
                             <td>
                                 <div class="d-flex align-items-center">
-                                    @if (subscription.ImageUrl != null)
+                                    @if (!string.IsNullOrEmpty(subscription.ImageUrl))
                                     {
-                                        <img src="@subscription.ImageUrl" alt="@subscription.Name" class="rounded me-2" style="width: 40px; height: 40px; object-fit: cover;" />
+                                        <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="
+                                             data-src="@subscription.ImageUrl"
+                                             alt="@subscription.Name"
+                                             class="rounded me-2 lazy-image"
+                                             style="width: 50px; height: 50px; object-fit: cover;" />
                                     }
                                     <strong>@(subscription.Name ?? subscription.PlatformItemId)</strong>
                                 </div>

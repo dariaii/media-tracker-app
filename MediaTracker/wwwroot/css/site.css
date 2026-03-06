@@ -92,3 +92,14 @@ body {
     min-width: 180px;
     max-width: 180px;
 }
+
+.lazy-image {
+    background-color: #e9ecef;
+    transition: opacity 0.3s ease-in-out;
+    opacity: 0.5;
+}
+
+.lazy-image-loaded {
+    opacity: 1;
+    background-color: transparent;
+}

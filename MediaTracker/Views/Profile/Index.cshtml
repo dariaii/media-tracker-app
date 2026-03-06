@@ -13,11 +13,11 @@
             <div class="col-lg-6 col-sm-12 d-flex flex-column align-items-center text-center">
                 @if (Model.ProfilePicturePath != null)
                 {
-                    <img id="profile-image" src="~/profile-pictures/@Model.ProfilePicturePath" class="d-block rounded mb-3">
+                    <img id="profile-image" src="~/profile-pictures/@Model.ProfilePicturePath" class="d-block rounded mb-3" style="width:250px;height:250px;object-fit:cover">
                 }
                 else
                 {
-                    <img id="profile-image" src="~/assets/img/default-profile.jpg" class="d-block rounded mb-3">
+                    <img id="profile-image" src="~/assets/img/default-profile.jpg" class="d-block rounded mb-3" style="width:250px;height:250px;object-fit:cover">
                 }
 
                 <form method="post" enctype="multipart/form-data" class="w-100">

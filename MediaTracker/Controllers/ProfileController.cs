@@ -38,10 +38,11 @@ namespace MediaTracker.Controllers
         {
             if (file != null && _profileService.UploadProfilePicture(file))
             {
+                TempData["SuccessMessage"] = _localizer["Global_SuccessMessage"].Value;
                 return RedirectToAction("Index");
             }
 
-            TempData["Errors"] = _localizer["Global_ErrorMesage"].ToString();
+            TempData["Errors"] = _localizer["Global_ErrorMesage"].Value;
 
             return RedirectToAction("Index");
         }
@@ -52,10 +53,11 @@ namespace MediaTracker.Controllers
         {
             if (_profileService.UploadProfilePicture(null, true))
             {
+                TempData["SuccessMessage"] = _localizer["Global_SuccessMessage"].Value;
                 return RedirectToAction("Index");
             }
 
-            TempData["Errors"] = _localizer["Global_ErrorMesage"].ToString();
+            TempData["Errors"] = _localizer["Global_ErrorMesage"].Value;
 
             return RedirectToAction("Index");
         }
@@ -66,10 +68,11 @@ namespace MediaTracker.Controllers
         {
             if (!string.IsNullOrWhiteSpace(model.UserName) && _profileService.UpdateUsername(model.UserName))
             {
+                TempData["SuccessMessage"] = _localizer["Global_SuccessMessage"].Value;
                 return RedirectToAction("Index");
             }
 
-            TempData["Errors"] = _localizer["Global_ErrorMesage"].ToString();
+            TempData["Errors"] = _localizer["Global_ErrorMesage"].Value;
 
             return RedirectToAction("Index");
         }
