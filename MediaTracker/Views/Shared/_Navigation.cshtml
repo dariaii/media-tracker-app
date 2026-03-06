@@ -1,0 +1,80 @@
+﻿@model ApplicationUser
+
+<nav id="navigation-bar" class="navbar navbar-example navbar-expand-lg bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" asp-controller="Home" asp-action="@nameof(HomeController.Index)">@Localizer["Global_AppName"]</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-ex-3">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbar-ex-3">
+            <div class="navbar-nav me-auto">
+                <a class="nav-item nav-link" asp-controller="Home" asp-action="@nameof(HomeController.Index)">@Localizer["Navigation_Home"]</a>
+                <a class="nav-item nav-link" asp-controller="Subscriptions" asp-action="@nameof(SubscriptionsController.WhatsNew)">@Localizer["Navigation_WhatsNew"]</a>
+                <a class="nav-item nav-link" asp-controller="Subscriptions" asp-action="@nameof(SubscriptionsController.Index)">@Localizer["Navigation_Subscriptions"]</a>
+            </div>
+
+            <form class="d-flex ms-auto me-3" action="/explore" method="get">
+                <div class="input-group input-group-merge">
+                    <span class="input-group-text"><i class="bx bx-search"></i></span>
+                    <input type="text" name="q" class="form-control" placeholder="@Localizer["Navigation_Explore"]..." aria-label="Search" />
+                </div>
+            </form>
+
+            <ul class="navbar-nav flex-row align-items-center">
+                <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                    <a class="nav-link dropdown-toggle hide-arrow" asp-controller="Profile" asp-action="@nameof(ProfileController.Index)" data-bs-toggle="dropdown">
+                        <div class="avatar">
+                            @if (Model.ProfilePicturePath != null)
+                            {
+                                <img src="~/profile-pictures/@Model.ProfilePicturePath" class="w-px-40 h-auto rounded-circle">
+                            }
+                            else
+                            {
+                                <img src="~/assets/img/default-profile.jpg" class="w-px-40 h-auto rounded-circle" />
+                            }
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <a class="dropdown-item" asp-controller="Profile" asp-action="@nameof(ProfileController.Index)">
+                                <div class="d-flex">
+                                    <div class="flex-shrink-0 me-3">
+                                        <div class="avatar">
+                                            @if (Model.ProfilePicturePath != null)
+                                            {
+                                                <img src="~/profile-pictures/@Model.ProfilePicturePath" class="w-px-40 h-auto rounded-circle">
+                                            }
+                                            else
+                                            {
+                                                <img src="~/assets/img/default-profile.jpg" class="w-px-40 h-auto rounded-circle" />
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="flex-grow-1 d-flex align-items-center">
+                                        <span class="fw-semibold">@Model.UserName</span>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <div class="dropdown-divider"></div>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" asp-controller="Profile" asp-action="@nameof(ProfileController.Index)">
+                                <i class="bx bx-user me-2"></i>
+                                <span class="align-middle">@Localizer["Profile_Profile"]</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" asp-controller="Account" asp-action="@nameof(AccountController.Logout)">
+                                <i class="bx bx-power-off me-2"></i>
+                                <span class="align-middle">@Localizer["Account_Logout"]</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

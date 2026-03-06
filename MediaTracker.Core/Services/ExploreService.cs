@@ -1,0 +1,48 @@
+using MediaTracker.Core.Integrations.Apple;
+using MediaTracker.Core.Integrations.Spotify;
+using MediaTracker.Core.Integrations.YouTube;
+using MediaTracker.Core.Models;
+using Microsoft.Extensions.Logging;
+
+namespace MediaTracker.Core.Services
+{
+    public interface IExploreService
+    {
+        Task<List<ExploreResult>> SearchAsync(string query);
+    }
+
+    public class ExploreService(
+        ISpotifyService spotifyService,
+        IYouTubeService youTubeService,
+        IApplePodcastService applePodcastService,
+        ILogger<ExploreService> logger) : IExploreService
+    {
+        private readonly ISpotifyService _spotifyService = spotifyService;
+        private readonly IYouTubeService _youTubeService = youTubeService;
+        private readonly IApplePodcastService _applePodcastService = applePodcastService;
+        private readonly ILogger<ExploreService> _logger = logger;
+
+        public async Task<List<ExploreResult>> SearchAsync(string query)
+        {
+            try
+            {
+                var spotifyTask = _spotifyService.SearchAsync(query);
+                var youtubeTask = _youTubeService.SearchChannelsAsync(query);
+                var appleTask = _applePodcastService.SearchPodcastsAsync(query);
+
+                await Task.WhenAll(spotifyTask, youtubeTask, appleTask);
+
+                var results = new List<ExploreResult>();
+                results.AddRange(spotifyTask.Result);
+                results.AddRange(youtubeTask.Result);
+                results.AddRange(appleTask.Result);
+                return results;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error during cross-platform search for '{Query}'", query);
+                return [];
+            }
+        }
+    }
+}

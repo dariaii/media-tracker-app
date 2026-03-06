@@ -1,0 +1,100 @@
+@model ExploreViewModel
+@{
+    ViewData["Title"] = @Localizer["Navigation_Explore"];
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="mb-0 text-muted">@Localizer["Navigation_Explore"]</h2>
+</div>
+
+@if (string.IsNullOrWhiteSpace(Model.Query))
+{
+    <div class="card">
+        <div class="card-body text-center py-5">
+            <i class="bx bx-search-alt fs-1 text-muted mb-2 d-block"></i>
+            <p class="mb-0 text-muted">@Localizer["Explore_SearchPrompt"]</p>
+        </div>
+    </div>
+}
+else if (!Model.Results.Any())
+{
+    <div class="card">
+        <div class="card-body text-center py-5">
+            <i class="bx bx-search-alt fs-1 text-muted mb-2 d-block"></i>
+            <p class="mb-0 text-muted">@Localizer["Explore_NoResults"]</p>
+        </div>
+    </div>
+}
+else
+{
+    <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-4">
+        @foreach (var item in Model.Results)
+        {
+            <div class="col">
+                <div class="card h-100 d-flex flex-column">
+                    @if (item.ImageUrl is not null)
+                    {
+                        <div class="position-relative">
+                            <img src="@item.ImageUrl" class="card-img-top" alt="@item.Name"
+                                 style="height: 140px; object-fit: cover;" />
+                        </div>
+                    }
+                    <div class="card-body py-2 px-3">
+                        <h6 class="card-title mb-0 lh-sm" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                            @item.Name
+                        </h6>
+                    </div>
+                    <div class="card-footer border-0 pt-0 px-3 pb-3 mt-auto">
+                        @if (!string.IsNullOrEmpty(item.Description))
+                        {
+                            <p class="text-muted small mb-2 text-truncate">@item.Description</p>
+                        }
+                        @switch (item.SourceType)
+                        {
+                            case SubscriptionType.SpotifyArtist:
+                                <div class="d-flex gap-2 w-100">
+                                    <a href="@item.PlatformUrl" target="_blank" class="btn btn-success btn-sm w-50">
+                                        <i class="bx bxl-spotify me-1"></i> Spotify
+                                    </a>
+                                    <a asp-controller="Subscriptions" asp-action="@nameof(SubscriptionsController.Create)" asp-route-type="@item.SourceType" asp-route-platformItemId="@item.PlatformItemId" asp-route-returnUrl="@($"{Context.Request.Path}{Context.Request.QueryString}")" class="btn btn-outline-success btn-sm w-50">
+                                        <i class="bx bx-plus me-1"></i> Add
+                                    </a>
+                                </div>
+                                break;
+                            case SubscriptionType.SpotifyPodcasts:
+                                <div class="d-flex gap-2 w-100">
+                                    <a href="@item.PlatformUrl" target="_blank" class="btn btn-info btn-sm w-50">
+                                        <i class="bx bxl-spotify me-1"></i> Spotify
+                                    </a>
+                                    <a asp-controller="Subscriptions" asp-action="@nameof(SubscriptionsController.Create)" asp-route-type="@item.SourceType" asp-route-platformItemId="@item.PlatformItemId" asp-route-returnUrl="@($"{Context.Request.Path}{Context.Request.QueryString}")" class="btn btn-outline-info btn-sm w-50">
+                                        <i class="bx bx-plus me-1"></i> Add
+                                    </a>
+                                </div>
+                                break;
+                            case SubscriptionType.Youtube:
+                                <div class="d-flex gap-2 w-100">
+                                    <a href="@item.PlatformUrl" target="_blank" class="btn btn-danger btn-sm w-50">
+                                        <i class="bx bxl-youtube me-1"></i> YouTube
+                                    </a>
+                                    <a asp-controller="Subscriptions" asp-action="@nameof(SubscriptionsController.Create)" asp-route-type="@item.SourceType" asp-route-platformItemId="@item.PlatformItemId" asp-route-returnUrl="@($"{Context.Request.Path}{Context.Request.QueryString}")" class="btn btn-outline-danger btn-sm w-50">
+                                        <i class="bx bx-plus me-1"></i> Add
+                                    </a>
+                                </div>
+                                break;
+                            case SubscriptionType.ApplePodcasts:
+                                <div class="d-flex gap-2 w-100">
+                                    <a href="@item.PlatformUrl" target="_blank" class="btn btn-dark btn-sm w-50">
+                                        <i class="bx bxl-apple me-1"></i> Apple
+                                    </a>
+                                    <a asp-controller="Subscriptions" asp-action="@nameof(SubscriptionsController.Create)" asp-route-type="@item.SourceType" asp-route-platformItemId="@item.PlatformItemId" asp-route-returnUrl="@($"{Context.Request.Path}{Context.Request.QueryString}")" class="btn btn-outline-dark btn-sm w-50">
+                                        <i class="bx bx-plus me-1"></i> Add
+                                    </a>
+                                </div>
+                                break;
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

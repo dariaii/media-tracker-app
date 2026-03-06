@@ -1,0 +1,166 @@
+﻿@model HomeViewModel
+@{
+    ViewData["Title"] = @Localizer["Navigation_Home"];
+}
+
+<!-- WHAT'S NEW SECTION -->
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="mb-0 text-muted">@Localizer["Section_WhatsNew"]</h2>
+    <a asp-controller="Subscriptions" asp-action="@nameof(SubscriptionsController.WhatsNew)" class="btn btn-outline-primary btn-sm">
+        @Localizer["Home_SeeAll"] <i class="bx bx-chevron-right ms-1"></i>
+    </a>
+</div>
+
+@if (!Model.LatestItems.Any())
+{
+    <div class="card mb-5">
+        <div class="card-body text-center py-4">
+            <i class="bx bx-news fs-1 text-muted mb-2 d-block"></i>
+            <p class="mb-0 text-muted">@Localizer["WhatsNew_NoItems"]</p>
+        </div>
+    </div>
+}
+else
+{
+    <div class="position-relative px-2 mb-5">
+        <button class="scroll-arrow scroll-arrow-left" data-track="feed-track" disabled>
+            <i class="bx bx-chevron-left"></i>
+        </button>
+        <div class="scroll-container">
+            <div id="feed-track" class="scroll-track pb-2">
+                @foreach (var item in Model.LatestItems)
+                {
+                    var imageAspectRatio = item.SourceType == SubscriptionType.Youtube
+                        ? "aspect-ratio: 16 / 9;"
+                        : "aspect-ratio: 1 / 1;";
+
+                    <div class="feed-card">
+                        <div class="card h-100 d-flex flex-column">
+                            @if (item.ImageUrl is not null)
+                            {
+                                <div class="position-relative">
+                                    <img src="@item.ImageUrl" class="card-img-top" alt="@item.Title"
+                                         style="@imageAspectRatio object-fit: cover; width: 100%;" />
+                                    @if (!string.IsNullOrEmpty(item.Badge))
+                                    {
+                                        var badgeClass = item.SourceType == SubscriptionType.SpotifyArtist
+                                            ? "bg-success"
+                                            : "bg-dark bg-opacity-75";
+                                        <span class="badge @badgeClass position-absolute bottom-0 end-0 m-2">
+                                            @item.Badge
+                                        </span>
+                                    }
+                                </div>
+                            }
+                            <div class="card-body py-2 px-3">
+                                <h6 class="card-title mb-0 lh-sm" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                                    @Html.Raw(item.Title)
+                                </h6>
+                            </div>
+                            <div class="card-footer border-0 pt-0 px-3 pb-3 mt-auto">
+                                @if (!string.IsNullOrEmpty(item.Subtitle))
+                                {
+                                    <p class="text-muted small mb-1 text-truncate">@item.Subtitle</p>
+                                }
+                                <p class="text-muted small mb-2">
+                                    <i class="bx bx-calendar me-1"></i>
+                                    @if (DateTime.TryParse(item.ReleaseDate, out var dt))
+                                    {
+                                        @dt.ToString("dd MMM yyyy")
+                                    }
+                                    else
+                                    {
+                                        @item.ReleaseDate
+                                    }
+                                </p>
+                                <a asp-controller="Subscriptions" asp-action="@nameof(SubscriptionsController.Releases)" asp-route-id="@item.SubscriptionId"
+                                   class="btn btn-outline-primary btn-sm w-100">
+                                    <i class="bx bx-show me-1"></i> @Localizer["Home_SeeMore"]
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <button class="scroll-arrow scroll-arrow-right" data-track="feed-track">
+            <i class="bx bx-chevron-right"></i>
+        </button>
+    </div>
+}
+
+<!-- SUBSCRIPTIONS SECTION -->
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="mb-0 text-muted">@Localizer["Section_Subscriptions"]</h2>
+    <a asp-controller="Subscriptions" asp-action="@nameof(SubscriptionsController.Index)" class="btn btn-outline-primary btn-sm">
+        @Localizer["Home_SeeAll"] <i class="bx bx-chevron-right ms-1"></i>
+    </a>
+</div>
+
+@if (!Model.Subscriptions.Any())
+{
+    <div class="card">
+        <div class="card-body text-center py-4">
+            <i class="bx bx-info-circle fs-1 text-muted mb-2 d-block"></i>
+            <p class="mb-0 text-muted">@Localizer["Subscription_NoSubscriptions"]</p>
+        </div>
+    </div>
+}
+else
+{
+    <div class="position-relative px-2">
+        <button class="scroll-arrow scroll-arrow-left" data-track="sub-track" disabled>
+            <i class="bx bx-chevron-left"></i>
+        </button>
+        <div class="scroll-container">
+            <div id="sub-track" class="scroll-track pb-2">
+                @foreach (var sub in Model.Subscriptions)
+                {
+                    <div class="sub-card">
+                        <a asp-controller="Subscriptions" asp-action="@nameof(SubscriptionsController.Releases)" asp-route-id="@sub.Id"
+                           class="text-decoration-none">
+                            <div class="card text-center">
+                                @if (sub.ImageUrl is not null)
+                                {
+                                    <img src="@sub.ImageUrl" class="card-img-top" alt="@sub.Name"
+                                         style="aspect-ratio: 1 / 1; object-fit: cover; width: 100%;" />
+                                }
+                                <div class="card-body py-2 px-2">
+                                    <p class="card-text small fw-semibold mb-0 text-truncate" title="@sub.Name">
+                                        @(sub.Name ?? sub.PlatformItemId)
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+        <button class="scroll-arrow scroll-arrow-right" data-track="sub-track">
+            <i class="bx bx-chevron-right"></i>
+        </button>
+    </div>
+}
+
+<script>
+    document.querySelectorAll('.scroll-arrow').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const track = document.getElementById(btn.dataset.track);
+            const scrollAmount = track.clientWidth * 0.75;
+            track.scrollBy({ left: btn.classList.contains('scroll-arrow-left') ? -scrollAmount : scrollAmount });
+        });
+    });
+
+    document.querySelectorAll('.scroll-track').forEach(track => {
+        const updateArrows = () => {
+            const parent = track.closest('.position-relative');
+            const leftBtn  = parent.querySelector('.scroll-arrow-left');
+            const rightBtn = parent.querySelector('.scroll-arrow-right');
+            leftBtn.disabled  = track.scrollLeft <= 0;
+            rightBtn.disabled = track.scrollLeft + track.clientWidth >= track.scrollWidth - 1;
+        };
+
+        track.addEventListener('scroll', updateArrows);
+        updateArrows();
+    });
+</script>

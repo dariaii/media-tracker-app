@@ -1,0 +1,55 @@
+﻿@model RegisterViewModel
+@{
+    ViewData["Title"] = @Localizer["Account_Register"];
+    Layout = "_LayoutAnonymous";
+}
+
+<h4 class="mb-2">@Localizer["Account_SignUp"]</h4>
+
+@if (ViewBag.Errors != null)
+{
+    <div class="mb-4">
+        @foreach (var error in ViewBag.Errors)
+        {
+            <span class="text-danger">@error</span>
+            <br />
+        }
+    </div>
+}
+
+<form id="formAuthentication" class="mb-3" asp-route-returnUrl="@Model.ReturnUrl" asp-action="@nameof(AccountController.Register)" method="POST">
+    <div class="mb-3">
+        <label asp-for="@Model.UserName" class="form-label">@Localizer["Account_UserName"]</label>
+        <input class="form-control" type="text" asp-for="@Model.UserName" autofocus>
+        <span asp-validation-for="@Model.UserName" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Email" class="form-label">@Localizer["Account_Email"]</label>
+        <input asp-for="@Model.Email" class="form-control" />
+        <span asp-validation-for="@Model.Email" class="text-danger"></span>
+    </div>
+    <div class="mb-3 form-password-toggle">
+        <label class="form-label" asp-for="@Model.Password">@Localizer["Account_Password"]</label>
+        <div class="input-group input-group-merge">
+            <input class="form-control" type="password" asp-for="@Model.Password" aria-describedby="password" />
+            <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+        </div>
+        <span asp-validation-for="@Model.Password" class="text-danger"></span>
+    </div>
+    <div class="mb-3 form-password-toggle">
+        <label class="form-label" asp-for="@Model.ConfirmPassword">@Localizer["Account_ConfirmPassword"]</label>
+        <div class="input-group input-group-merge">
+            <input class="form-control" type="password" asp-for="@Model.ConfirmPassword" aria-describedby="password" />
+            <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+        </div>
+        <span asp-validation-for="@Model.ConfirmPassword" class="text-danger"></span>
+    </div>
+    <button class="btn btn-primary d-grid w-100">@Localizer["Account_Register"]</button>
+</form>
+
+<p class="text-center">
+    <span>@Localizer["Account_AlreadyRegistered"]</span>
+    <a asp-controller="Account" asp-action="@nameof(AccountController.Login)" asp-route-returnUrl="@Model.ReturnUrl">
+        <span>@Localizer["Account_BackToLogin"]</span>
+    </a>
+</p>

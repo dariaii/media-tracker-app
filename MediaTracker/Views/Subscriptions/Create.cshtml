@@ -1,0 +1,90 @@
+@model CreateSubscriptionViewModel
+@{
+    ViewData["Title"] = @Localizer["Subscription_Create"];
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-6 col-md-8 col-sm-12">
+        <div class="card mb-4">
+            <h2 class="card-header">@Localizer["Subscription_Create"]</h2>
+            <div class="card-body">
+                <form method="post" asp-controller="Subscriptions" asp-action="@nameof(SubscriptionsController.Create)">
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                    <div class="mb-3">
+                        <label asp-for="Type" class="form-label">@Localizer["Subscription_Type"]</label>
+                        <select asp-for="Type" class="form-select">
+                            <option value="">— @Localizer["Subscription_SelectType"] —</option>
+                            <option value="@((int)SubscriptionType.SpotifyArtist)">@Localizer["Subscription_Artist"]</option>
+                            <option value="@((int)SubscriptionType.SpotifyPodcasts)">@Localizer["Subscription_Podcast"]</option>
+                            <option value="@((int)SubscriptionType.ApplePodcasts)">@Localizer["Subscription_ApplePodcast"]</option>
+                            <option value="@((int)SubscriptionType.Youtube)">@Localizer["Subscription_YouTubeChannel"]</option>
+                        </select>
+                        <span asp-validation-for="Type" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="PlatformItemId" class="form-label">@Localizer["Subscription_PlatformItemId"]</label>
+                        <input asp-for="PlatformItemId" class="form-control" placeholder="e.g. 6eUKZXaKkcviH0Ku9w2n3V" />
+                        <span asp-validation-for="PlatformItemId" class="text-danger"></span>
+                        <div id="platformIdHelp" class="form-text"></div>
+                    </div>
+
+                    <div class="mb-4">
+                        <div class="form-check form-switch">
+                            <input asp-for="ReceiveNotifications" class="form-check-input" type="checkbox" role="switch" />
+                            <label asp-for="ReceiveNotifications" class="form-check-label">@Localizer["Subscription_ReceiveNotifications"]</label>
+                        </div>
+                    </div>
+
+                    <input type="hidden" asp-for="ReturnUrl" />
+
+                    <div class="mt-2">
+                        <button type="submit" class="btn btn-primary me-2">
+                            <i class="bx bx-plus me-1"></i> @Localizer["Subscription_Submit"]
+                        </button>
+                        
+                        @if (!string.IsNullOrEmpty(Model.ReturnUrl))
+                        {
+                            <a href="@Model.ReturnUrl" class="btn btn-outline-secondary">
+                                @Localizer["Profile_Cancel"]
+                            </a>
+                        }
+                        else
+                        {
+                            <a asp-controller="Subscriptions" asp-action="@nameof(SubscriptionsController.Index)" class="btn btn-outline-secondary">
+                                @Localizer["Profile_Cancel"]
+                            </a>
+                        }
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.getElementById('Type').addEventListener('change', function () {
+            var helpText = document.getElementById('platformIdHelp');
+            var val = parseInt(this.value);
+            switch (val) {
+                case @((int)SubscriptionType.SpotifyArtist):
+                    helpText.textContent = '@Localizer["Subscription_Help_SpotifyArtist"]';
+                    break;
+                case @((int)SubscriptionType.SpotifyPodcasts):
+                    helpText.textContent = '@Localizer["Subscription_Help_SpotifyPodcast"]';
+                    break;
+                case @((int)SubscriptionType.ApplePodcasts):
+                    helpText.textContent = '@Localizer["Subscription_Help_ApplePodcast"]';
+                    break;
+                case @((int)SubscriptionType.Youtube):
+                    helpText.textContent = '@Localizer["Subscription_Help_Youtube"]';
+                    break;
+                default:
+                    helpText.textContent = '';
+                    break;
+            }
+        });
+    </script>
+}

@@ -1,0 +1,101 @@
+﻿@model List<Subscription>
+@{
+    ViewData["Title"] = @Localizer["Navigation_Subscriptions"];
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="mb-0 text-muted">@Localizer["Navigation_Subscriptions"]</h2>
+    <a asp-controller="Subscriptions" asp-action="@nameof(SubscriptionsController.Create)" class="btn btn-primary">
+        <i class="bx bx-plus me-1"></i> @Localizer["Subscription_Create"]
+    </a>
+</div>
+
+@if (!Model.Any())
+{
+    <div class="card">
+        <div class="card-body text-center py-5">
+            <i class="bx bx-info-circle fs-1 text-muted mb-2 d-block"></i>
+            <p class="mb-0 text-muted">@Localizer["Subscription_NoSubscriptions"]</p>
+        </div>
+    </div>
+}
+else
+{
+    <div class="card">
+        <div class="table-responsive text-nowrap">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>@Localizer["Subscription_Name"]</th>
+                        <th>@Localizer["Subscription_Type"]</th>
+                        <th class="text-center">@Localizer["Subscription_ReceiveNotifications"]</th>
+                        <th class="text-center">@Localizer["Subscription_Actions"]</th>
+                    </tr>
+                </thead>
+                <tbody class="table-border-bottom-0">
+                    @foreach (var subscription in Model)
+                    {
+                        var subType = (SubscriptionType)subscription.Type;
+
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    @if (subscription.ImageUrl != null)
+                                    {
+                                        <img src="@subscription.ImageUrl" alt="@subscription.Name" class="rounded me-2" style="width: 40px; height: 40px; object-fit: cover;" />
+                                    }
+                                    <strong>@(subscription.Name ?? subscription.PlatformItemId)</strong>
+                                </div>
+                            </td>
+                            <td>
+                                @switch (subType)
+                                {
+                                    case SubscriptionType.SpotifyArtist:
+                                        <span class="badge bg-label-success">@Localizer["Subscription_Artist"]</span>
+                                        break;
+                                    case SubscriptionType.SpotifyPodcasts:
+                                        <span class="badge bg-label-info">@Localizer["Subscription_Podcast"]</span>
+                                        break;
+                                    case SubscriptionType.Youtube:
+                                        <span class="badge bg-label-danger">@Localizer["Subscription_YouTubeChannel"]</span>
+                                        break;
+                                    case SubscriptionType.ApplePodcasts:
+                                        <span class="badge bg-label-dark">@Localizer["Subscription_ApplePodcast"]</span>
+                                        break;
+                                }
+                            </td>
+                            <td class="text-center">
+                                <form method="post" asp-controller="Subscriptions" asp-action="@nameof(SubscriptionsController.ToggleNotifications)" asp-route-id="@subscription.Id" style="display: inline;">
+                                    <button type="submit" class="btn btn-sm btn-link p-0" title="@Localizer["Subscription_ToggleNotifications"]">
+                                        @if (subscription.ReceiveNotifications)
+                                        {
+                                            <i class="bx bx-bell text-success fs-5"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="bx bx-bell-off text-muted fs-5"></i>
+                                        }
+                                    </button>
+                                </form>
+                            </td>
+                            <td>
+                                <div class="d-flex justify-content-end gap-2">
+                                    <a asp-controller="Subscriptions" asp-action="@nameof(SubscriptionsController.Releases)" asp-route-id="@subscription.Id"
+                                       class="btn btn-sm btn-outline-primary">
+                                        <i class="bx bx-show me-1"></i> @Localizer["Subscription_ViewReleases"]
+                                    </a>
+                                    <form method="post" asp-controller="Subscriptions" asp-action="@nameof(SubscriptionsController.Delete)" asp-route-id="@subscription.Id" 
+                                          onsubmit="return confirm('@Localizer["Subscription_ConfirmDelete"]');" style="display: inline;">
+                                        <button type="submit" class="btn btn-sm btn-outline-danger">
+                                            <i class="bx bx-trash me-1"></i> @Localizer["Subscription_Delete"]
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}

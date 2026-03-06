@@ -1,0 +1,15 @@
+﻿@model string
+@{
+    ViewData["Title"] = @Localizer["Account_Register"];
+    Layout = "_LayoutAnonymous";
+}
+
+<p>@Localizer["Account_EmailConfirmedMessage"]</p>
+
+<div class="text-center">
+    <a asp-controller="Account" asp-action="@nameof(AccountController.Login)" asp-route-returnUrl="@Model"
+       class="d-flex align-items-center justify-content-center">
+        <i class="bx bx-chevron-left scaleX-n1-rtl bx-sm"></i>
+        @Localizer["Account_BackToLogin"]
+    </a>
+</div>

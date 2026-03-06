@@ -1,0 +1,73 @@
+﻿@model ProfileViewModel
+@{
+    ViewData["Title"] = @Localizer["Profile_Profile"];
+
+    var user = AuthenticationService.CurrentUser();
+}
+
+<div class="card mb-4">
+    <h2 class="card-header">@Localizer["Profile_Details"]</h2>
+
+    <div class="card-body">
+        <div class="row d-flex align-items-start">
+            <div class="col-lg-6 col-sm-12 d-flex flex-column align-items-center text-center">
+                @if (Model.ProfilePicturePath != null)
+                {
+                    <img id="profile-image" src="~/profile-pictures/@Model.ProfilePicturePath" class="d-block rounded mb-3">
+                }
+                else
+                {
+                    <img id="profile-image" src="~/assets/img/default-profile.jpg" class="d-block rounded mb-3">
+                }
+
+                <form method="post" enctype="multipart/form-data" class="w-100">
+                    <div class="d-flex flex-column align-items-center">
+                        <div class="button-wrapper">
+                            <label for="fileUpload" class="btn btn-primary me-2 mb-2" tabindex="0">
+                                <span class="d-none d-sm-block">@Localizer["Profile_SelectFile"]</span>
+                                <i class="bx bx-folder-open d-block d-sm-none"></i>
+                            </label>
+                            <input type="file" id="fileUpload" name="file" hidden accept="image/png, image/jpeg"
+                                   onchange="document.getElementById('upload-actions').style.display = 'block'; document.getElementById('file-name').textContent = this.files[0].name" />
+
+                            <button type="submit" asp-controller="Profile" asp-action="@nameof(ProfileController.ResetAvatar)" class="btn btn-outline-secondary mb-2">
+                                <span class="d-none d-sm-block">@Localizer["Profile_ResetAvatar"]</span>
+                                <i class="bx bx-reset d-block d-sm-none"></i>
+                            </button>
+                        </div>
+
+                        <div id="upload-actions" class="mt-2" style="display: none;">
+                            <p class="mb-2"><strong>@Localizer["Profile_SelectedFile"]</strong> <span id="file-name"></span></p>
+
+                            <button type="submit" asp-controller="Profile" asp-action="@nameof(ProfileController.UpdateAvatar)" class="btn btn-success">
+                                <span class="d-none d-sm-block">@Localizer["Profile_UploadAvatar"]</span>
+                                <i class="bx bx-upload d-block d-sm-none"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-lg-6 col-sm-12 d-flex flex-column px-2 pe-lg-5 pe-sm-2">
+                <form id="formAccountSettings" method="POST" asp-controller="Profile" asp-action="@nameof(ProfileController.UpdateUsername)">
+                    <div class="row">
+                        <div class="mb-3 col-md-12">
+                            <label asp-for="@Model.UserName" class="form-label">@Localizer["Account_UserName"]</label>
+                            <input class="form-control" type="text" asp-for="@Model.UserName">
+                            <span asp-validation-for="@Model.UserName" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3 col-md-12">
+                            <label asp-for="Email" class="form-label">@Localizer["Account_Email"]</label>
+                            <input asp-for="@Model.Email" class="form-control" disabled />
+                        </div>
+                    </div>
+
+                    <div class="mt-2">
+                        <button type="submit" class="btn btn-primary me-2">@Localizer["Profile_SaveChanges"]</button>
+                        <button type="reset" class="btn btn-outline-secondary">@Localizer["Profile_Cancel"]</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
