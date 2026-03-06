@@ -28,17 +28,17 @@ namespace MediaTracker.Core.Services
             {
                 //exclude youtube searching since it uses too many of the API daily quota
 
+                var appleTask = _applePodcastService.SearchPodcastsAsync(query);
                 var spotifyTask = _spotifyService.SearchAsync(query);
                 //var youtubeTask = _youTubeService.SearchChannelsAsync(query);
-                var appleTask = _applePodcastService.SearchPodcastsAsync(query);
 
                 //await Task.WhenAll(spotifyTask, youtubeTask, appleTask);
                 await Task.WhenAll(spotifyTask, appleTask);
 
                 var results = new List<ExploreResult>();
+                results.AddRange(appleTask.Result);
                 results.AddRange(spotifyTask.Result);
                 //results.AddRange(youtubeTask.Result);
-                results.AddRange(appleTask.Result);
                 return results;
             }
             catch (Exception ex)

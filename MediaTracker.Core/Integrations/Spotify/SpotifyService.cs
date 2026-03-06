@@ -290,18 +290,6 @@ namespace MediaTracker.Core.Integrations.Spotify
 
                     var exploreResults = new List<ExploreResult>();
 
-                    if (result.Artists?.Items != null)
-                    {
-                        exploreResults.AddRange(result.Artists.Items.Select(a => new ExploreResult
-                        {
-                            PlatformItemId = a.Id,
-                            Name = a.Name,
-                            SourceType = SubscriptionType.SpotifyArtist,
-                            ImageUrl = a.Images.FirstOrDefault()?.Url,
-                            PlatformUrl = a.ExternalUrls?.Spotify ?? $"https://open.spotify.com/artist/{a.Id}"
-                        }));
-                    }
-
                     if (result.Shows?.Items != null)
                     {
                         exploreResults.AddRange(result.Shows.Items.Select(s => new ExploreResult
@@ -312,6 +300,18 @@ namespace MediaTracker.Core.Integrations.Spotify
                             SourceType = SubscriptionType.SpotifyPodcasts,
                             ImageUrl = s.Images.FirstOrDefault()?.Url,
                             PlatformUrl = s.ExternalUrls?.Spotify ?? $"https://open.spotify.com/show/{s.Id}"
+                        }));
+                    }
+
+                    if (result.Artists?.Items != null)
+                    {
+                        exploreResults.AddRange(result.Artists.Items.Select(a => new ExploreResult
+                        {
+                            PlatformItemId = a.Id,
+                            Name = a.Name,
+                            SourceType = SubscriptionType.SpotifyArtist,
+                            ImageUrl = a.Images.FirstOrDefault()?.Url,
+                            PlatformUrl = a.ExternalUrls?.Spotify ?? $"https://open.spotify.com/artist/{a.Id}"
                         }));
                     }
 

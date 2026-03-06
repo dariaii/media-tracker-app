@@ -77,6 +77,7 @@
   "Navigation_WhatsNew": "Ново",
   "Navigation_Subscriptions": "Абонаменти",
   "Navigation_Explore": "Търсене",
+  "Navigation_ExploreResults": "Резултати от търсенето:",
 
   "Section_WhatsNew": "Какво ново?",
   "Section_LatestReleases": "Последни публикации от абонаментите",
@@ -115,7 +116,7 @@
   "Subscription_DeletedMessage": "Абонаментът беше изтрит успешно.",
 
   "WhatsNew_FilterAll": "Всички",
-  "WhatsNew_NoItems": "Няма нови публикации от вашите абонаменти.",
+  "WhatsNew_NoItems": "Не бяха открити нови публикации от вашите абонаменти.",
 
   "Home_SeeAll": "Виж всички",
   "Home_SeeMore": "Виж повече",
