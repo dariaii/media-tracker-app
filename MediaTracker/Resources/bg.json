@@ -78,7 +78,8 @@
   "Navigation_Subscriptions": "Абонаменти",
   "Navigation_Explore": "Търсене",
 
-  "Section_WhatsNew": "Последни публикации от абонаментите",
+  "Section_WhatsNew": "Какво ново?",
+  "Section_LatestReleases": "Последни публикации от абонаментите",
   "Section_Subscriptions": "Вашите абонаменти",
 
   "Subscription_Create": "Нов абонамент",
