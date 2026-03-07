@@ -7,7 +7,7 @@ using Microsoft.Extensions.Localization;
 namespace MediaTracker.Controllers
 {
     [Authorize]
-    public class ProfileController(IStringLocalizer localizer, IProfileService profileService) : BaseController
+    public class ProfileController(IStringLocalizer localizer, IProfileService profileService) : Controller
     {
         private readonly IStringLocalizer _localizer = localizer;
         private readonly IProfileService _profileService = profileService;

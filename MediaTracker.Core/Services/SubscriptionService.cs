@@ -3,8 +3,8 @@ using MediaTracker.Core.Integrations.Apple;
 using MediaTracker.Core.Integrations.Spotify;
 using MediaTracker.Core.Integrations.YouTube;
 using MediaTracker.Core.Models;
+using MediaTracker.Data;
 using MediaTracker.Data.Entities;
-using MediaTracker.Data.Repository;
 
 namespace MediaTracker.Core.Services
 {

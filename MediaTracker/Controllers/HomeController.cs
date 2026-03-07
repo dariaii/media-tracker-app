@@ -8,7 +8,7 @@ namespace MediaTracker.Controllers
     [Authorize]
     public class HomeController(
         ILogger<HomeController> logger,
-        ISubscriptionService subscriptionService) : BaseController
+        ISubscriptionService subscriptionService) : Controller
     {
         private readonly ILogger<HomeController> _logger = logger;
         private readonly ISubscriptionService _subscriptionService = subscriptionService;

@@ -151,7 +151,7 @@ namespace MediaTracker.Core.Integrations.YouTube
                                 thumbnail(v.Snippet.Thumbnails),
                                 duration
                             );
-                        }).ToList();
+                        }).Take(SubscriptionConstants.MaxResults).ToList();
                 }
                 catch (Exception ex)
                 {

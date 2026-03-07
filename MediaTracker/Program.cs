@@ -1,8 +1,6 @@
 using MediaTracker.Core.Infrastructure.Localization;
 using MediaTracker.Core.Services;
-using MediaTracker.Data.DbContext;
 using MediaTracker.Data.Entities;
-using MediaTracker.Data.Repository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
@@ -16,6 +14,7 @@ using MediaTracker.Core.Integrations.Apple;
 using Hangfire;
 using MediaTracker.Infrastructure.Hangfire;
 using Hangfire.SQLite;
+using MediaTracker.Data;
 
 const string DEFAULT_CULTURE = "bg";
 

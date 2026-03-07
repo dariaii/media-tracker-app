@@ -9,7 +9,7 @@ namespace MediaTracker.Controllers
     [AllowAnonymous]
     public class AccountController(
         Core.Services.IAuthenticationService authenticationService,
-        IStringLocalizer localizer) : BaseController
+        IStringLocalizer localizer) : Controller
     {
         readonly Core.Services.IAuthenticationService _authenticationService = authenticationService;
         readonly IStringLocalizer _localizer = localizer;
@@ -158,6 +158,23 @@ namespace MediaTracker.Controllers
             await _authenticationService.SignOut();
 
             return RedirectToAction(nameof(Login));
+        }
+
+        [NonAction]
+        protected void HandleErrors(IEnumerable<IdentityError> errorsList)
+        {
+            ViewBag.Errors = new List<string>();
+            foreach (var error in errorsList)
+            {
+                ViewBag.Errors.Add(error.Description);
+            }
+        }
+
+        [NonAction]
+        protected void HandleErrors(string message)
+        {
+            ViewBag.Errors = new List<string>();
+            ViewBag.Errors.Add(message);
         }
     }
 }

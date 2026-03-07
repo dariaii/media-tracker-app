@@ -8,7 +8,7 @@ namespace MediaTracker.Controllers
     [Authorize]
     public class ExploreController(
         ILogger<ExploreController> logger,
-        IExploreService exploreService) : BaseController
+        IExploreService exploreService) : Controller
     {
         private readonly ILogger<ExploreController> _logger = logger;
         private readonly IExploreService _exploreService = exploreService;

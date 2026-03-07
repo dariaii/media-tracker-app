@@ -24,6 +24,7 @@
                          data-src="@image"
                          alt="@name"
                          class="rounded me-3 lazy-image"
+                         referrerpolicy="no-referrer"
                          style="width: 110px; height: 110px; object-fit: cover;" />
                 }
                 <div>
@@ -63,6 +64,7 @@ else
                                  data-src="@video.ImageUrl"
                                  class="card-img-top lazy-image"
                                  alt="@video.Title"
+                                 referrerpolicy="no-referrer"
                                  style="aspect-ratio: 16 / 9; object-fit: cover; width: 100%;" />
                             @if (!string.IsNullOrEmpty(video.Duration))
                             {

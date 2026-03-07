@@ -1,6 +1,6 @@
 ﻿using System.Web;
+using MediaTracker.Data;
 using MediaTracker.Data.Entities;
-using MediaTracker.Data.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

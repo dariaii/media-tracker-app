@@ -17,7 +17,7 @@ namespace MediaTracker.Controllers
         ISubscriptionService subscriptionService,
         ISpotifyService spotifyService,
         IYouTubeService youTubeService,
-        IApplePodcastService applePodcastService) : BaseController
+        IApplePodcastService applePodcastService) : Controller
     {
         private readonly ILogger<SubscriptionsController> _logger = logger;
         private readonly IStringLocalizer _localizer = localizer;

@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using MediaTracker.Data.Entities;
 
-namespace MediaTracker.Data.DbContext
+namespace MediaTracker.Data
 {
     public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : IdentityDbContext<ApplicationUser>(options)
     {

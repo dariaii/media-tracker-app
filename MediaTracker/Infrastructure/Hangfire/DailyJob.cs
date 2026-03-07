@@ -5,8 +5,8 @@ using MediaTracker.Core.Integrations.Spotify;
 using MediaTracker.Core.Integrations.YouTube;
 using MediaTracker.Core.Models;
 using MediaTracker.Core.Services;
+using MediaTracker.Data;
 using MediaTracker.Data.Entities;
-using MediaTracker.Data.Repository;
 using System.Text;
 
 namespace MediaTracker.Infrastructure.Hangfire
