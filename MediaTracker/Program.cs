@@ -127,7 +127,7 @@ builder.Services.AddHttpClient<IYouTubeService, YouTubeService>();
 
 builder.Services.AddHttpClient<IApplePodcastService, ApplePodcastService>();
 
-builder.Services.AddScoped<DailyJob>();
+builder.Services.AddScoped<MorningUpdatesJob>();
 
 #endregion
 

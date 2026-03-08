@@ -205,7 +205,7 @@ namespace MediaTracker.Core.Integrations.YouTube
                             ImageUrl = c.Snippet.Thumbnails.High?.Url,
                             SourceType = SubscriptionType.Youtube,
                             PlatformUrl = $"https://www.youtube.com/channel/{c.Id.ChannelId}"
-                        }).ToList();
+                        }).Take(SubscriptionConstants.MaxSearchResults).ToList();
                 }
                 catch (Exception ex)
                 {

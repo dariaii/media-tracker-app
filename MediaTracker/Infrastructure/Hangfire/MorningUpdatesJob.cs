@@ -13,7 +13,7 @@ namespace MediaTracker.Infrastructure.Hangfire
 {
     [AutomaticRetry(Attempts = 3)]
     [DisableConcurrentExecution(timeoutInSeconds: 3600)]
-    public class DailyJob(
+    public class MorningUpdatesJob(
         IRepository repository,
         ISpotifyService spotifyService,
         IYouTubeService youTubeService,

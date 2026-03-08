@@ -6,8 +6,8 @@ namespace MediaTracker.Infrastructure.Hangfire
     {
         public static void ConfigureRecurringJobs()
         {
-            RecurringJob.AddOrUpdate<DailyJob>(
-                recurringJobId: "daily-job",
+            RecurringJob.AddOrUpdate<MorningUpdatesJob>(
+                recurringJobId: "morning-update",
                 methodCall: job => job.ExecuteAsync(),
                 cronExpression: "0 8 * * *",
                 options: new RecurringJobOptions
