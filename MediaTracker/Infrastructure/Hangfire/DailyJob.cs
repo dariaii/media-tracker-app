@@ -59,7 +59,7 @@ namespace MediaTracker.Infrastructure.Hangfire
                 if (string.IsNullOrEmpty(email))
                     continue;
 
-                var subject = $"Your weekly media digest — {from:dd MMM} – {to.AddDays(-1):dd MMM yyyy}";
+                var subject = $"Media Tracker | Your weekly media digest — {from:dd MMM} – {to.AddDays(-1):dd MMM yyyy}";
                 var body = BuildEmailBody(releases, from, to.AddDays(-1));
 
                 emailService.SendEmail([email], subject, body);
